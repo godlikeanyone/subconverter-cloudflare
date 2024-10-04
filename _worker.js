@@ -5775,12 +5775,6 @@ function stringify3(value, replacer, options) {
     return new Document(value, _replacer, options).toString(options);
 }
 
-function getKvnamspace(env) {
-    if (Object.prototype.toString.call(env.SUB_BUCKET) === '[object Object]') {
-        return env.SUB_BUCKET;
-    }
-    return env[env.SUB_BUCKET];
-}
 // worker.js
 var dump = stringify3;
 var load = parse;
@@ -5793,7 +5787,7 @@ var src_default = {
 
         let backend = env.BACKEND || 'https://url.v1.mk';
 
-        const SUB_BUCKET = getKvnamspace(env);
+        const SUB_BUCKET = env.SUB_BUCKET;
         if (SUB_BUCKET === undefined) {
             return new Response(`kv绑定错误,env SUB_BUCKET is ${env.SUB_BUCKET || '空'}`, { status: 400 });
         }
